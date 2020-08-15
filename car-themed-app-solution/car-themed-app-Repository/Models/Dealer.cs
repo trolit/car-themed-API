@@ -11,5 +11,18 @@
         public string PostalCode { get; set; }
 
         public string Country { get; set; }
+
+        public Dealer()
+        {
+
+        }
+
+        public Dealer(string Name, string Address, string PostalCode, string Country) 
+        {
+            this.Name = Name;
+            this.Address = Address;
+            this.PostalCode = PostalCode;
+            this.Country = Country;
+        }
     }
 }

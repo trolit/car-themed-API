@@ -12,6 +12,16 @@ namespace car_themed_app_Repository.Models
 
         public DateTime DrivingLicenseFrom { get; set; }
 
+        public Driver()
+        {
 
+        }
+
+        public Driver(string FullName, DateTime DateOfBirth, DateTime DrivingLicenseFrom)
+        {
+            this.FullName = FullName;
+            this.DateOfBirth = DateOfBirth;
+            this.DrivingLicenseFrom = DrivingLicenseFrom;
+        }
     }
 }

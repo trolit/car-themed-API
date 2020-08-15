@@ -1,4 +1,5 @@
 using car_themed_app_DataLayer;
+using car_themed_app_Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,8 @@ namespace car_themed_app
                     Description = "Training .NET Core 3.1 API"
                 });
             });
+
+            services.AddScoped<IDbSeeder, DbSeeder>();
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {

@@ -17,5 +17,20 @@
         public int DriverId { get; set; }
 
         public virtual Driver Driver { get; set; }
+
+        public Car()
+        {
+
+        }
+
+        public Car(string Brand, string Model, string YearOfProduction, string VIN, string LicensePlate, int DriverId)
+        {
+            this.Brand = Brand;
+            this.Model = Model;
+            this.YearOfProduction = YearOfProduction;
+            this.VIN = VIN;
+            this.LicensePlate = LicensePlate;
+            this.DriverId = DriverId;
+        }
     }
 }

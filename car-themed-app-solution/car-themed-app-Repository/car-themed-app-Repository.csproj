@@ -5,8 +5,4 @@
     <RootNamespace>car_themed_app_Repository</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>
