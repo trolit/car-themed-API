@@ -37,6 +37,15 @@ namespace car_themed_app
                     Description = "Training .NET Core 3.1 API"
                 });
             });
+
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .WithOrigins("https://localhost:44354")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +62,8 @@ namespace car_themed_app
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Car themed API");
             });
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
