@@ -9,5 +9,15 @@ namespace car_themed_app_DataLayer
         { }
 
         public DbSet<Driver> Drivers { get; set; }
+
+        public DbSet<Car> Cars { get; set; }
+
+        public DbSet<Service> ServiceHistory { get; set; }
+
+        public DbSet<Mechanic> Mechanics { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Dealer> Dealers { get; set; }
     }
 }
