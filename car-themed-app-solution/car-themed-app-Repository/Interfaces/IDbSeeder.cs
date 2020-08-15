@@ -2,6 +2,6 @@
 {
     public interface IDbSeeder
     {
-        void SeedDatabase();
+        int SeedDatabase();
     }
 }

@@ -1,5 +1,4 @@
-﻿using car_themed_app_DataLayer;
-using car_themed_app_Repository.Interfaces;
+﻿using car_themed_app_Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace car_themed_app.Controllers
@@ -8,23 +7,23 @@ namespace car_themed_app.Controllers
     [ApiController]
     public class DataGeneratorController : ControllerBase
     {
-        private IDbSeeder _dbSeeder;
+        private readonly IDbSeeder _DbSeeder;
 
-        public DataGeneratorController(IDbSeeder dbSeeder)
+        public DataGeneratorController(IDbSeeder DbSeeder)
         {
-            _dbSeeder = dbSeeder;
+            _DbSeeder = DbSeeder;
         }
 
         /// <summary>
-        /// Seed Database with some predefined data. This operation removes all current data held by Db!
+        /// Seed database with some predefined data. This operation removes all current data held by Db!
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Amount of rows added into database.</returns>
         [HttpPost]
         public IActionResult SeedData()
         {
-            _dbSeeder.SeedDatabase();
+            var amountOfRows = _DbSeeder.SeedDatabase();
 
-            return Ok();
+            return Ok($"Inserted {amountOfRows} rows into database.");
         }
     }
 }

@@ -33,8 +33,10 @@ namespace car_themed_app_DataLayer
             _context.Mechanics.Clear();
         }
 
-        public void SeedDatabase()
+        public int SeedDatabase()
         {
+            int rowsAddedCounter = 0;
+
             ClearDatabase();
 
             _context.AddRange(ReturnListOfMechanics());
@@ -43,12 +45,12 @@ namespace car_themed_app_DataLayer
 
             _context.AddRange(ReturnListOfDrivers());
 
-            _context.SaveChanges();
+            rowsAddedCounter += _context.SaveChanges();
 
             // Must be saved after Drivers 
             _context.AddRange(ReturnListOfCars());
 
-            _context.SaveChanges();
+            rowsAddedCounter += _context.SaveChanges();
 
            // Must be saved after Cars/Mechanics/Dealers
 
@@ -56,7 +58,9 @@ namespace car_themed_app_DataLayer
 
             _context.AddRange(ReturnListOfServices());
 
-            _context.SaveChanges();
+            rowsAddedCounter += _context.SaveChanges();
+
+            return rowsAddedCounter;
         }
 
         private int RandomizeId(List<int> listOfIds)
