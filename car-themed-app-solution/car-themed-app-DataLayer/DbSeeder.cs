@@ -37,24 +37,24 @@ namespace car_themed_app_DataLayer
         {
             ClearDatabase();
 
-            _context.AddRange(ReturnMechanics());
+            _context.AddRange(ReturnListOfMechanics());
 
-            _context.AddRange(ReturnDealers());
+            _context.AddRange(ReturnListOfDealers());
 
-            _context.AddRange(ReturnDrivers());
+            _context.AddRange(ReturnListOfDrivers());
 
             _context.SaveChanges();
 
             // Must be saved after Drivers 
-            _context.AddRange(ReturnCars());
+            _context.AddRange(ReturnListOfCars());
 
             _context.SaveChanges();
 
            // Must be saved after Cars/Mechanics/Dealers
 
-            _context.AddRange(ReturnOrders());
+            _context.AddRange(ReturnListOfOrders());
 
-            _context.AddRange(ReturnServices());
+            _context.AddRange(ReturnListOfServices());
 
             _context.SaveChanges();
         }
@@ -72,7 +72,7 @@ namespace car_themed_app_DataLayer
 
         #region Predefined Data 
 
-        private List<Car> ReturnCars()
+        private List<Car> ReturnListOfCars()
         {
             List<int> ids = _context.Drivers.Select(d => d.Id).ToList();
 
@@ -109,7 +109,7 @@ namespace car_themed_app_DataLayer
             return cars;
         }
 
-        private List<Order> ReturnOrders()
+        private List<Order> ReturnListOfOrders()
         {
             List<int> ids = _context.Dealers.Select(d => d.Id).ToList();
 
@@ -127,7 +127,7 @@ namespace car_themed_app_DataLayer
             return orders;
         }
 
-        private List<Dealer> ReturnDealers()
+        private List<Dealer> ReturnListOfDealers()
         {
             List<Dealer> dealers = new List<Dealer>
             {
@@ -146,7 +146,7 @@ namespace car_themed_app_DataLayer
             return dealers;
         }
 
-        private List<Driver> ReturnDrivers()
+        private List<Driver> ReturnListOfDrivers()
         {
             List<Driver> drivers = new List<Driver>
             {
@@ -172,7 +172,7 @@ namespace car_themed_app_DataLayer
             return drivers;
         }
 
-        private List<Mechanic> ReturnMechanics()
+        private List<Mechanic> ReturnListOfMechanics()
         {
 
             List<Mechanic> mechanics = new List<Mechanic>
@@ -199,7 +199,7 @@ namespace car_themed_app_DataLayer
             return mechanics;
         }
 
-        private List<Service> ReturnServices()
+        private List<Service> ReturnListOfServices()
         {
             List<int> mechanics_ids = _context.Mechanics.Select(d => d.Id).ToList();
             List<int> cars_ids = _context.Cars.Select(d => d.Id).ToList();
