@@ -3,9 +3,6 @@ using car_themed_app.Queries.Orders;
 using car_themed_app_Repository.Dtos;
 using car_themed_app_Repository.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

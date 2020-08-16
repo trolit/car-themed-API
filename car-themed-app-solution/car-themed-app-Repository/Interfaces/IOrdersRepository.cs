@@ -11,5 +11,7 @@ namespace car_themed_app_Repository.Interfaces
         Task<Order> GetOrderAsync(int orderId);
 
         Task<Order> CreateOrderAsync(Order order);
+
+        void DeleteOrder(int orderId);
     }
 }

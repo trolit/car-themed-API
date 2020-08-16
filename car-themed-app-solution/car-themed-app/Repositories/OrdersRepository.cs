@@ -3,6 +3,7 @@ using car_themed_app_Repository.Interfaces;
 using car_themed_app_Repository.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace car_themed_app.Repositories
@@ -33,6 +34,13 @@ namespace car_themed_app.Repositories
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
             return order;
+        }
+
+        public void DeleteOrder(int orderId)
+        {
+            Order orderToDelete = _context.Orders.FirstOrDefault(o => o.Id == orderId);
+            _context.Remove(orderToDelete);
+            _context.SaveChanges();
         }
     }
 }

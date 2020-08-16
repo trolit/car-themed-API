@@ -44,5 +44,13 @@ namespace car_themed_app.Controllers
             var result = await _mediator.Send(command);
             return CreatedAtAction("GetOrder", new { orderId = result.Id }, result);
         }
+
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> DeleteOrder(int orderId)
+        {
+            var command = new DeleteOrderByIdCommand(orderId);
+            await _mediator.Send(command);
+            return NoContent(); // 204
+        }
     }
 }
