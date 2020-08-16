@@ -1,5 +1,7 @@
+using AutoMapper;
 using car_themed_app_DataLayer;
 using car_themed_app_Repository.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +51,10 @@ namespace car_themed_app
                     .AllowAnyHeader()
                     .AllowCredentials();
             }));
+
+            services.AddMediatR(typeof(Startup));
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
