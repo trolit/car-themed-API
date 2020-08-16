@@ -7,5 +7,7 @@ namespace car_themed_app_Repository.Interfaces
     public interface IOrdersRepository
     {
         Task<List<Order>> GetAllOrdersAsync();
+
+        Task<Order> GetOrderAsync(int orderId);
     }
 }

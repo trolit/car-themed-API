@@ -21,5 +21,11 @@ namespace car_themed_app.Repositories
             List<Order> orders = await _context.Orders.Include("Dealer").ToListAsync();
             return orders;
         }
+
+        public async Task<Order> GetOrderAsync(int orderId)
+        {
+            Order order = await _context.Orders.Include("Dealer").FirstOrDefaultAsync(o => o.Id == orderId);
+            return order;
+        }
     }
 }
