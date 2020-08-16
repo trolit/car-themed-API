@@ -9,5 +9,7 @@ namespace car_themed_app_Repository.Interfaces
         Task<List<Order>> GetAllOrdersAsync();
 
         Task<Order> GetOrderAsync(int orderId);
+
+        Task<Order> CreateOrderAsync(Order order);
     }
 }

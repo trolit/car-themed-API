@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using car_themed_app.Commands.Orders;
 using car_themed_app.Queries.Orders;
+using car_themed_app_Repository.Dtos;
 using car_themed_app_Repository.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,14 @@ namespace car_themed_app.Controllers
             var query = new GetOrderByIdQuery(orderId);
             var result = await _mediator.Send(query);
             return result != null ? (IActionResult) Ok(result) : NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder([FromBody] NewOrderDto data)
+        {
+            var command = new CreateOrderCommand(data);
+            var result = await _mediator.Send(command);
+            return CreatedAtAction("GetOrder", new { orderId = result.Id }, result);
         }
     }
 }

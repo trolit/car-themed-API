@@ -2,9 +2,7 @@
 using car_themed_app.Queries.Orders;
 using car_themed_app_Repository.Dtos;
 using car_themed_app_Repository.Interfaces;
-using car_themed_app_Repository.Models;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

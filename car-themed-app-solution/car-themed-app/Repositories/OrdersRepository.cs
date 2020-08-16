@@ -27,5 +27,12 @@ namespace car_themed_app.Repositories
             Order order = await _context.Orders.Include("Dealer").FirstOrDefaultAsync(o => o.Id == orderId);
             return order;
         }
+
+        public async Task<Order> CreateOrderAsync(Order order)
+        {
+            await _context.AddAsync(order);
+            await _context.SaveChangesAsync();
+            return order;
+        }
     }
 }
