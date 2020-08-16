@@ -42,5 +42,11 @@ namespace car_themed_app.Repositories
             _context.Remove(orderToDelete);
             _context.SaveChanges();
         }
+
+        public void UpdateOrder(Order order)
+        {
+            _context.Update(order);
+            _context.SaveChanges();
+        }
     }
 }

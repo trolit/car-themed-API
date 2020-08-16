@@ -13,5 +13,7 @@ namespace car_themed_app_Repository.Interfaces
         Task<Order> CreateOrderAsync(Order order);
 
         void DeleteOrder(int orderId);
+
+        void UpdateOrder(Order order);
     }
 }

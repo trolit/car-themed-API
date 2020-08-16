@@ -52,5 +52,13 @@ namespace car_themed_app.Controllers
             await _mediator.Send(command);
             return NoContent(); // 204
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderDto data)
+        {
+            var command = new UpdateOrderCommand(data);
+            await _mediator.Send(command);
+            return Ok();
+        }
     }
 }

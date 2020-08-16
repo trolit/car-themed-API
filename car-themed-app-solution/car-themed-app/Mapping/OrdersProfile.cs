@@ -8,6 +8,8 @@ namespace car_themed_app.Mapping
     {
         public OrdersProfile()
         {
+            CreateMap<UpdateOrderDto, Order>();
+
             CreateMap<NewOrderDto, Order>();
 
             CreateMap<Order, OrderDto>()
