@@ -1,4 +1,5 @@
 using AutoMapper;
+using car_themed_app.Repositories;
 using car_themed_app_DataLayer;
 using car_themed_app_Repository.Interfaces;
 using MediatR;
@@ -42,6 +43,7 @@ namespace car_themed_app
             });
 
             services.AddScoped<IDbSeeder, DbSeeder>();
+            services.AddScoped<IOrdersRepository, OrdersRepository>();
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
