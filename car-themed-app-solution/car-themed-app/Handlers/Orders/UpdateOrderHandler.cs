@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
 using car_themed_app.Commands.Orders;
+using car_themed_app_Repository;
 using car_themed_app_Repository.Interfaces;
 using car_themed_app_Repository.Models;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
+using static car_themed_app_Repository.GenericResultMethods;
 
 namespace car_themed_app.Handlers.Orders
 {
-    public class UpdateOrderHandler : IRequestHandler<UpdateOrderCommand>
+    public class UpdateOrderHandler : IRequestHandler<UpdateOrderCommand, Result<string>>
     {
         private readonly IOrdersRepository _ordersRepository;
         private readonly IMapper _mapper;
@@ -20,11 +21,16 @@ namespace car_themed_app.Handlers.Orders
             _mapper = mapper;
         }
 
-        public Task<Unit> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            var mappedOrder = _mapper.Map<Order>(request.Order);
-            _ordersRepository.UpdateOrder(mappedOrder);
-            return Task.FromResult(Unit.Value);
+            Order order = await _ordersRepository.GetOrderAsync(request.Order.Id);
+            if(order != null)
+            {
+                var mappedOrder = _mapper.Map<Order>(request.Order);
+                _ordersRepository.UpdateOrder(mappedOrder);
+                return Ok<string>();
+            }
+            return ErrorMessage<string>($"Order {request.Order.Id} does not exist.");
         }
     }
 }

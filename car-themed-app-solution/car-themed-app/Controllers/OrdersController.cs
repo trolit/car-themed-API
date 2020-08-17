@@ -49,16 +49,16 @@ namespace car_themed_app.Controllers
         public async Task<IActionResult> DeleteOrder(int orderId)
         {
             var command = new DeleteOrderByIdCommand(orderId);
-            await _mediator.Send(command);
-            return NoContent(); // 204
+            var result = await _mediator.Send(command);
+            return result.ErrorMessage == string.Empty ? (IActionResult)NoContent() : NotFound(result.ErrorMessage);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderDto data)
         {
             var command = new UpdateOrderCommand(data);
-            await _mediator.Send(command);
-            return Ok();
+            var result = await _mediator.Send(command);
+            return result.ErrorMessage == string.Empty ? (IActionResult) Ok() : NotFound(result.ErrorMessage);
         }
     }
 }
