@@ -22,7 +22,7 @@ namespace car_themed_app.Repositories
         {
             if(paginationFilter == null)
             {
-                return await _context.Orders.Include("Dealer").ToListAsync();
+                return await _context.Orders.Include(o => o.Dealer).ToListAsync();
             }
 
             int skipAmount = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
@@ -34,7 +34,7 @@ namespace car_themed_app.Repositories
 
         public async Task<Order> GetOrderAsync(int orderId)
         {
-            Order order = await _context.Orders.Include("Dealer").FirstOrDefaultAsync(o => o.Id == orderId);
+            Order order = await _context.Orders.Include(o => o.Dealer).FirstOrDefaultAsync(o => o.Id == orderId);
             return order;
         }
 
