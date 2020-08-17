@@ -48,7 +48,7 @@ namespace car_themed_app.Controllers
         {
             var command = new DeleteOrderByIdCommand(orderId);
             var result = await _mediator.Send(command);
-            return result.ErrorMessage == string.Empty ? (IActionResult)NoContent() : NotFound(result.ErrorMessage);
+            return result.ErrorMessage == string.Empty ? (IActionResult) NoContent() : NotFound(result.ErrorMessage);
         }
 
         [HttpPut]

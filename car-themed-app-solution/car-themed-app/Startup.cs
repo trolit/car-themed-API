@@ -1,8 +1,10 @@
 using AutoMapper;
+using car_themed_app.PipelineBehaviours;
 using car_themed_app.Repositories;
 using car_themed_app.Services;
 using car_themed_app_DataLayer;
 using car_themed_app_Repository.Interfaces;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,13 +50,14 @@ namespace car_themed_app
             services.AddScoped<IDbSeeder, DbSeeder>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUriService>(provider => 
+            services.AddSingleton<IUriService>(provider => 
             {
                 IHttpContextAccessor accessor = provider.GetRequiredService<IHttpContextAccessor>();
                 HttpRequest request = accessor.HttpContext.Request;
                 string absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), "/");
                 return new UriService(absoluteUri);
             });
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
@@ -66,6 +69,8 @@ namespace car_themed_app
             }));
 
             services.AddMediatR(typeof(Startup));
+
+            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
 
             services.AddAutoMapper(typeof(Startup));
         }
