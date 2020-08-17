@@ -1,4 +1,5 @@
-﻿using car_themed_app_DataLayer;
+﻿using car_themed_app.Repository;
+using car_themed_app_DataLayer;
 using car_themed_app_Repository.Interfaces;
 using car_themed_app_Repository.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,18 @@ namespace car_themed_app.Repositories
             _context = context;
         }
 
-        public async Task<List<Order>> GetAllOrdersAsync()
+        public async Task<List<Order>> GetAllOrdersAsync(PaginationFilter paginationFilter = null)
         {
-            List<Order> orders = await _context.Orders.Include("Dealer").ToListAsync();
-            return orders;
+            if(paginationFilter == null)
+            {
+                return await _context.Orders.Include("Dealer").ToListAsync();
+            }
+
+            int skipAmount = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return await _context.Orders.Include(o => o.Dealer)
+                .Skip(skipAmount)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
         }
 
         public async Task<Order> GetOrderAsync(int orderId)

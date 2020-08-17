@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "car-themed-app-Repository",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "car-themed-app-DataLayer", "car-themed-app-DataLayer\car-themed-app-DataLayer.csproj", "{640DAE7B-34A3-451F-8483-F0BEC192DDF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "car-themed-app-Contracts", "car-themed-app-Contracts\car-themed-app-Contracts.csproj", "{82C76F1D-A223-4A58-B40F-C76E6B6830C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{640DAE7B-34A3-451F-8483-F0BEC192DDF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{640DAE7B-34A3-451F-8483-F0BEC192DDF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{640DAE7B-34A3-451F-8483-F0BEC192DDF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82C76F1D-A223-4A58-B40F-C76E6B6830C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82C76F1D-A223-4A58-B40F-C76E6B6830C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82C76F1D-A223-4A58-B40F-C76E6B6830C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82C76F1D-A223-4A58-B40F-C76E6B6830C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

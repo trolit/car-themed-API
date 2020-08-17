@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\car-themed-app-Contracts\car-themed-app-Contracts.csproj" />
     <ProjectReference Include="..\car-themed-app-DataLayer\car-themed-app-DataLayer.csproj" />
   </ItemGroup>
 

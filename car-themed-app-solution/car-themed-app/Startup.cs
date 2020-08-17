@@ -1,13 +1,16 @@
 using AutoMapper;
 using car_themed_app.Repositories;
+using car_themed_app.Services;
 using car_themed_app_DataLayer;
 using car_themed_app_Repository.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -44,6 +47,14 @@ namespace car_themed_app
 
             services.AddScoped<IDbSeeder, DbSeeder>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUriService>(provider => 
+            {
+                IHttpContextAccessor accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                HttpRequest request = accessor.HttpContext.Request;
+                string absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), "/");
+                return new UriService(absoluteUri);
+            });
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {

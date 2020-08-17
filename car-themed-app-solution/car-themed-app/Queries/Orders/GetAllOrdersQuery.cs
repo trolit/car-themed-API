@@ -1,11 +1,16 @@
-﻿using car_themed_app_Repository.Dtos;
+﻿using car_themed_app_Contracts.Responses;
+using car_themed_app_Repository.Dtos;
 using MediatR;
-using System.Collections.Generic;
 
 namespace car_themed_app.Queries.Orders
 {
-    public class GetAllOrdersQuery : IRequest<List<OrderDto>>
+    public class GetAllOrdersQuery : IRequest<PagedResponse<OrderDto>>
     {
+        public PaginationQuery PaginationQuery { get; set; }
 
+        public GetAllOrdersQuery(PaginationQuery paginationQuery)
+        {
+            PaginationQuery = paginationQuery;
+        }
     }
 }

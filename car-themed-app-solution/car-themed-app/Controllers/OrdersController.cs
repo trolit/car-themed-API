@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using car_themed_app.Commands.Orders;
+﻿using car_themed_app.Commands.Orders;
+using car_themed_app.Queries;
 using car_themed_app.Queries.Orders;
 using car_themed_app_Repository.Dtos;
-using car_themed_app_Repository.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace car_themed_app.Controllers
@@ -22,9 +20,9 @@ namespace car_themed_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetAllOrders([FromQuery] PaginationQuery paginationQuery)
         {
-            var query = new GetAllOrdersQuery();
+            var query = new GetAllOrdersQuery(paginationQuery);
             var result = await _mediator.Send(query);
             return Ok(result);
         }
