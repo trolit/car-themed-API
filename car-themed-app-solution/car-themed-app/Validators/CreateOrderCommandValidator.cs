@@ -8,11 +8,16 @@ namespace car_themed_app.Validators
     {
         public CreateOrderCommandValidator(IDealersRepository dealersRepository)
         {
-            RuleFor(r => r.Order.Components).ComponentValidation();
+            RuleFor(r => r.Order.Components)
+                .Cascade(CascadeMode.Stop)
+                .ComponentValidation();
 
-            RuleFor(r => r.Order.OrderDate).DateValidation();
+            RuleFor(r => r.Order.OrderDate)
+                .Cascade(CascadeMode.Stop)
+                .DateValidation();
 
             RuleFor(r => r.Order.DealerId)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .WithMessage("DealerId cannot be empty.")
                 .GreaterThan(0)

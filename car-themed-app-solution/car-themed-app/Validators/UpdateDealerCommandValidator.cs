@@ -7,13 +7,21 @@ namespace car_themed_app.Validators
     {
         public UpdateDealerCommandValidator()
         {
-            RuleFor(r => r.Dealer.Name).TextFieldValidation(5, 60);
+            RuleFor(r => r.Dealer.Name)
+                .Cascade(CascadeMode.Stop)
+                .TextFieldValidation(5, 60);
 
-            RuleFor(r => r.Dealer.Address).TextFieldValidation(2, 30);
+            RuleFor(r => r.Dealer.Address)
+                .Cascade(CascadeMode.Stop)
+                .TextFieldValidation(2, 30);
 
-            RuleFor(r => r.Dealer.PostalCode).TextFieldValidation(2, 15);
+            RuleFor(r => r.Dealer.PostalCode)
+                .Cascade(CascadeMode.Stop)
+                .TextFieldValidation(2, 15);
 
-            RuleFor(r => r.Dealer.Country).TextFieldValidation(2, 20);
+            RuleFor(r => r.Dealer.Country)
+                .Cascade(CascadeMode.Stop)
+                .TextFieldValidation(2, 20);
         }
     }
 }
