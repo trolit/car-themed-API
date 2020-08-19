@@ -21,5 +21,13 @@ namespace FluentValidation
                 .MaximumLength(150)
                 .WithMessage("Components field length overflow. Max allowed length is 200");
         }
+
+        public static IRuleBuilderOptions<T, string> TextFieldValidation<T>(this IRuleBuilder<T, string> rule, int minLength, int maxLength)
+        {
+            return rule
+                .NotEmpty()
+                .MinimumLength(minLength)
+                .MaximumLength(maxLength);
+        }
     }
 }
