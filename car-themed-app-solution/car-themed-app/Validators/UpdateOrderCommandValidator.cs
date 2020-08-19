@@ -2,11 +2,11 @@
 using car_themed_app_Repository.Interfaces;
 using FluentValidation;
 
-namespace car_themed_app.Validation
+namespace car_themed_app.Validators
 {
-    public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
+    public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
     {
-        public CreateOrderCommandValidator(IDealersRepository dealersRepository)
+        public UpdateOrderCommandValidator(IDealersRepository dealersRepository)
         {
             RuleFor(r => r.Order.Components).ComponentValidation();
 
