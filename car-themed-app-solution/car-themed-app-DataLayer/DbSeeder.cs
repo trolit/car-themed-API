@@ -26,12 +26,12 @@ namespace car_themed_app_DataLayer
 
         public void ClearDatabase()
         {
-            _context.ServiceHistory.Clear();
-            _context.Cars.Clear();
+            // _context.ServiceHistory.Clear();
+            // _context.Cars.Clear();
             _context.Orders.Clear();
-            _context.Drivers.Clear();
+            // _context.Drivers.Clear();
             _context.Dealers.Clear();
-            _context.Mechanics.Clear();
+            // _context.Mechanics.Clear();
         }
 
         public async Task<int> SeedDatabase()
@@ -40,12 +40,12 @@ namespace car_themed_app_DataLayer
 
             ClearDatabase();
 
-            rowsAddedCounter += await AddRecordsFromList(ReturnListOfMechanics());
+            // rowsAddedCounter += await AddRecordsFromList(ReturnListOfMechanics());
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfDealers());
-            rowsAddedCounter += await AddRecordsFromList(ReturnListOfDrivers());
-            rowsAddedCounter += await AddRecordsFromList(ReturnListOfCars());
+            // rowsAddedCounter += await AddRecordsFromList(ReturnListOfDrivers());
+            // rowsAddedCounter += await AddRecordsFromList(ReturnListOfCars());
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfOrders());
-            rowsAddedCounter += await AddRecordsFromList(ReturnListOfServices());
+            // rowsAddedCounter += await AddRecordsFromList(ReturnListOfServices());
 
             return rowsAddedCounter;
         }
