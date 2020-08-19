@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace car_themed_app.Validation
 {
-    public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
+    public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
     {
-        public CreateOrderCommandValidator(IDealersRepository dealersRepository)
+        public UpdateOrderCommandValidator(IDealersRepository dealersRepository)
         {
             RuleFor(r => r.Order.Components).ComponentValidation();
 
