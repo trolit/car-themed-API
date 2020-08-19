@@ -49,6 +49,7 @@ namespace car_themed_app
 
             services.AddScoped<IDbSeeder, DbSeeder>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddScoped<IDealersRepository, DealersRepository>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUriService>(provider => 
             {

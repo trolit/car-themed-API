@@ -1,4 +1,4 @@
-﻿namespace car_themed_app_Repository.Dtos
+﻿namespace car_themed_app_Repository.Dtos.OrderDtos
 {
     public class UpdateOrderDto
     {

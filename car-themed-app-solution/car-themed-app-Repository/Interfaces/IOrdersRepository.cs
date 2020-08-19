@@ -16,5 +16,7 @@ namespace car_themed_app_Repository.Interfaces
         void DeleteOrder(int orderId);
 
         void UpdateOrder(Order order);
+
+        Task<bool> CheckIfOrderExists(int orderId);
     }
 }

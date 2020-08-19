@@ -1,6 +1,6 @@
-﻿using car_themed_app_Repository.Dtos;
-using MediatR;
+﻿using MediatR;
 using car_themed_app_Repository.Models;
+using car_themed_app_Repository.Dtos.OrderDtos;
 
 namespace car_themed_app.Commands.Orders
 {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using car_themed_app.Queries.Orders;
-using car_themed_app_Repository.Dtos;
+using car_themed_app_Repository.Dtos.OrderDtos;
 using car_themed_app_Repository.Interfaces;
 using MediatR;
 using System.Threading;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace car_themed_app_DataLayer
 {
@@ -33,34 +34,26 @@ namespace car_themed_app_DataLayer
             _context.Mechanics.Clear();
         }
 
-        public int SeedDatabase()
+        public async Task<int> SeedDatabase()
         {
             int rowsAddedCounter = 0;
 
             ClearDatabase();
 
-            _context.AddRange(ReturnListOfMechanics());
-
-            _context.AddRange(ReturnListOfDealers());
-
-            _context.AddRange(ReturnListOfDrivers());
-
-            rowsAddedCounter += _context.SaveChanges();
-
-            // Must be saved after Drivers 
-            _context.AddRange(ReturnListOfCars());
-
-            rowsAddedCounter += _context.SaveChanges();
-
-           // Must be saved after Cars/Mechanics/Dealers
-
-            _context.AddRange(ReturnListOfOrders());
-
-            _context.AddRange(ReturnListOfServices());
-
-            rowsAddedCounter += _context.SaveChanges();
+            rowsAddedCounter += await AddRecordsFromList(ReturnListOfMechanics());
+            rowsAddedCounter += await AddRecordsFromList(ReturnListOfDealers());
+            rowsAddedCounter += await AddRecordsFromList(ReturnListOfCars());
+            rowsAddedCounter += await AddRecordsFromList(ReturnListOfOrders());
+            rowsAddedCounter += await AddRecordsFromList(ReturnListOfServices());
 
             return rowsAddedCounter;
+        }
+
+        private async Task<int> AddRecordsFromList<T>(List<T> data)
+        {
+            await _context.AddRangeAsync(data);
+            var amountOfRowsAdded = await _context.SaveChangesAsync();
+            return amountOfRowsAdded;
         }
 
         private int RandomizeId(List<int> listOfIds)

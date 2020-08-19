@@ -1,7 +1,7 @@
 ﻿using car_themed_app.Commands.Orders;
 using car_themed_app.Queries;
 using car_themed_app.Queries.Orders;
-using car_themed_app_Repository.Dtos;
+using car_themed_app_Repository.Dtos.OrderDtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

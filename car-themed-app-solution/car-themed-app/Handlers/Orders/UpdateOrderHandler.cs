@@ -23,8 +23,8 @@ namespace car_themed_app.Handlers.Orders
 
         public async Task<Result<string>> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            Order order = await _ordersRepository.GetOrderAsync(request.Order.Id);
-            if(order != null)
+            bool objExists = await _ordersRepository.CheckIfOrderExists(request.Order.Id);
+            if(objExists)
             {
                 var mappedOrder = _mapper.Map<Order>(request.Order);
                 _ordersRepository.UpdateOrder(mappedOrder);

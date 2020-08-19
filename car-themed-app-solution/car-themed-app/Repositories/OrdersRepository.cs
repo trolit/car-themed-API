@@ -42,6 +42,7 @@ namespace car_themed_app.Repositories
         {
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
+            _context.Entry(order).State = EntityState.Detached;
             return order;
         }
 
@@ -56,6 +57,11 @@ namespace car_themed_app.Repositories
         {
             _context.Update(order);
             _context.SaveChanges();
+        }
+
+        public async Task<bool> CheckIfOrderExists(int orderId)
+        {
+            return await _context.Orders.AnyAsync(o => o.Id == orderId);
         }
     }
 }

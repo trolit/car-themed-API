@@ -1,5 +1,6 @@
 ﻿using car_themed_app_Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace car_themed_app.Controllers
 {
@@ -19,9 +20,9 @@ namespace car_themed_app.Controllers
         /// </summary>
         /// <returns>Amount of rows added into database.</returns>
         [HttpPost]
-        public IActionResult SeedData()
+        public async Task<IActionResult> SeedData()
         {
-            var amountOfRows = _DbSeeder.SeedDatabase();
+            var amountOfRows = await _DbSeeder.SeedDatabase();
 
             return Ok($"Inserted {amountOfRows} rows into database.");
         }

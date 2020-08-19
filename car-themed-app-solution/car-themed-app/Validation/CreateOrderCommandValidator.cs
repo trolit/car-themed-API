@@ -7,6 +7,9 @@ namespace car_themed_app.Validation
     {
         public CreateOrderCommandValidator()
         {
+            RuleFor(r => r.Order.Components)
+                .NotEmpty();
+
             RuleFor(r => r.Order.DealerId)
                 .GreaterThan(15);
         }
