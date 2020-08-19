@@ -42,6 +42,7 @@ namespace car_themed_app_DataLayer
 
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfMechanics());
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfDealers());
+            rowsAddedCounter += await AddRecordsFromList(ReturnListOfDrivers());
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfCars());
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfOrders());
             rowsAddedCounter += await AddRecordsFromList(ReturnListOfServices());
@@ -49,10 +50,10 @@ namespace car_themed_app_DataLayer
             return rowsAddedCounter;
         }
 
-        private async Task<int> AddRecordsFromList<T>(List<T> data)
+        private async Task<int> AddRecordsFromList<T>(List<T> data) where T : class
         {
             await _context.AddRangeAsync(data);
-            var amountOfRowsAdded = await _context.SaveChangesAsync();
+            int amountOfRowsAdded = await _context.SaveChangesAsync();
             return amountOfRowsAdded;
         }
 
