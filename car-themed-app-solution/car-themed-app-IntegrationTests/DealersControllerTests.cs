@@ -37,7 +37,7 @@ namespace car_themed_app_IntegrationTests
         }
 
         [Fact]
-        public async Task Get_ReturnsDealers_WhenDealerExistsInDatabase()
+        public async Task Get_ReturnsDealer_WhenDealerExistsInDatabase()
         {
             // Arrange
             var createdDealer = await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
