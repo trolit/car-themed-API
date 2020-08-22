@@ -41,7 +41,7 @@ namespace car_themed_app_IntegrationTests
         public async Task GetAllDealers_ReturnsMaximumPossibleDealerNumber_DueToPaginationDefaultLimit()
         {
             // Arrange
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 20; i++)
             {
                 await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
             }
@@ -62,8 +62,7 @@ namespace car_themed_app_IntegrationTests
         public async Task Get_ReturnsDealer_WhenDealerExistsInDatabase()
         {
             // Arrange
-            var createdDealer = 
-                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+            var createdDealer = await CreateDealerAsync(Instantiate_NewDealerDto_Object());
 
             // Act
             var response = await TestClient.GetAsync(ApiRoutes.Dealers.Get.Replace("{dealerId}", createdDealer.Id.ToString()));
@@ -97,8 +96,7 @@ namespace car_themed_app_IntegrationTests
         public async Task Delete_ReturnsNoContent_WhenDealerIsDeletedFromDatabase()
         {
             // Arrange
-            var createdDealer = 
-                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+            var createdDealer = await CreateDealerAsync(Instantiate_NewDealerDto_Object());
 
             // Act
             var response = await TestClient.DeleteAsync(ApiRoutes.Dealers.Delete.Replace("{dealerId}", createdDealer.Id.ToString()));
@@ -127,10 +125,8 @@ namespace car_themed_app_IntegrationTests
         public async Task Update_ReturnsOK_WhenDealerWasSuccessfullyUpdated()
         {
             // Arrange
-            var createdDealer = 
-                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
-            var dealerToUpdate = 
-                new UpdateDealerDto(){ Id = createdDealer.Id, Name = "UpdatedName", Address = createdDealer.Address, Country = createdDealer.Country, PostalCode = "050" };
+            var createdDealer = await CreateDealerAsync(Instantiate_NewDealerDto_Object());
+            var dealerToUpdate = Instantiate_UpdateDealerDto_Object(createdDealer.Id);
 
             // Act
             var response = await TestClient.PutAsJsonAsync(ApiRoutes.Dealers.Update, dealerToUpdate);
@@ -143,8 +139,7 @@ namespace car_themed_app_IntegrationTests
         public async Task Update_ReturnsNotFound_WhenDealerNotExistsInDatabase()
         {
             // Arrange
-            var dealerToUpdate = 
-                new UpdateDealerDto() { Id = _unexistingDealerId, Name = "testing", Address = "testing", Country = "testing", PostalCode = "testing" };
+            var dealerToUpdate = Instantiate_UpdateDealerDto_Object(_unexistingDealerId);
 
             // Act
             var response = await TestClient.PutAsJsonAsync(ApiRoutes.Dealers.Update, dealerToUpdate);
@@ -162,6 +157,29 @@ namespace car_themed_app_IntegrationTests
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Dealers.Create, dealer);
             var responseContent = await response.Content.ReadAsStringAsync();
             return DeserializeContentIntoObject<Dealer>(responseContent);
+        }
+        
+        private NewDealerDto Instantiate_NewDealerDto_Object()
+        {
+            return new NewDealerDto()
+            {
+                Name = "Kazlov - NewDealer",
+                Address = "Inte-Tests",
+                Country = "Poland",
+                PostalCode = "040"
+            };
+        }
+
+        private UpdateDealerDto Instantiate_UpdateDealerDto_Object(int id)
+        {
+            return new UpdateDealerDto()
+            {
+                Id = id,
+                Name = "Zaklov - UpdateDealer",
+                Address = "testing",
+                Country = "testing",
+                PostalCode = "testing"
+            };
         }
     }
 }
