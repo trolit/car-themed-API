@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace car_themed_app_IntegrationTests
 {
@@ -35,6 +37,11 @@ namespace car_themed_app_IntegrationTests
                 });
                 
             TestClient = appFactory.CreateClient();
+        }
+
+        protected T DeserializeContentIntoObject<T>(string content)
+        {
+            return JsonConvert.DeserializeObject<T>(content);
         }
     }
 }
