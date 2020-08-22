@@ -71,6 +71,19 @@ namespace car_themed_app_IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
+        [Fact]
+        public async Task Delete_ReturnsNoContent_WhenDealerIsDeletedFromDatabase()
+        {
+            // Arrange
+            var createdDealer = await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+
+            // Act
+            var response = await TestClient.DeleteAsync(ApiRoutes.Dealers.Delete.Replace("{dealerId}", createdDealer.Id.ToString()));
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
         private async Task<Dealer> CreateDealerAsync(NewDealerDto dealer)
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Dealers.Create, dealer);
