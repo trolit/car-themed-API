@@ -14,6 +14,7 @@ namespace car_themed_app_IntegrationTests
     {
         private readonly int _defaultPageNumber = 1;
         private readonly int _defaultMaxPageSize = 10;
+        private readonly int _unexistingDealerId = 999;
 
         [Fact]
         public async Task GetAllDealers_WithoutAnyDealers_ReturnsEmptyResponse()
@@ -56,6 +57,18 @@ namespace car_themed_app_IntegrationTests
             returnedDealer.Address.Should().Be(createdDealer.Address);
             returnedDealer.PostalCode.Should().Be(createdDealer.PostalCode);
             returnedDealer.Country.Should().Be(createdDealer.Country);
+        }
+
+        [Fact]
+        public async Task Get_ReturnsNotFound_WhenDealerNotExistsInDatabase()
+        {
+            // Arrange
+
+            // Act
+            var response = await TestClient.GetAsync(ApiRoutes.Dealers.Get.Replace("{dealerId}", _unexistingDealerId.ToString()));
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         private async Task<Dealer> CreateDealerAsync(NewDealerDto dealer)
