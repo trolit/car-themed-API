@@ -38,10 +38,32 @@ namespace car_themed_app_IntegrationTests
         }
 
         [Fact]
+        public async Task GetAllDealers_ReturnsMaximumPossibleDealerNumber_DueToPaginationDefaultLimit()
+        {
+            // Arrange
+            for (int i = 0; i < 30; i++)
+            {
+                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+            }
+
+            // Act
+            HttpResponseMessage response = await TestClient.GetAsync(ApiRoutes.Dealers.GetAll);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            string result = await response.Content.ReadAsStringAsync();
+            var responseContent = DeserializeContentIntoObject<DeserializedGetAll<DealerDto>>(result);
+
+            responseContent.Data.Count.Should().Be(_defaultMaxPageSize);
+        }
+
+        [Fact]
         public async Task Get_ReturnsDealer_WhenDealerExistsInDatabase()
         {
             // Arrange
-            var createdDealer = await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+            var createdDealer = 
+                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
 
             // Act
             var response = await TestClient.GetAsync(ApiRoutes.Dealers.Get.Replace("{dealerId}", createdDealer.Id.ToString()));
@@ -75,13 +97,64 @@ namespace car_themed_app_IntegrationTests
         public async Task Delete_ReturnsNoContent_WhenDealerIsDeletedFromDatabase()
         {
             // Arrange
-            var createdDealer = await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+            var createdDealer = 
+                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
 
             // Act
             var response = await TestClient.DeleteAsync(ApiRoutes.Dealers.Delete.Replace("{dealerId}", createdDealer.Id.ToString()));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task Delete_ReturnsNotFound_WhenDealerToDeleteNotExists()
+        {
+            // Arrange
+
+            // Act
+            var response = await TestClient.DeleteAsync(ApiRoutes.Dealers.Delete.Replace("{dealerId}", _unexistingDealerId.ToString()));
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            responseContent.Should().Contain($"Dealer {_unexistingDealerId} does not exist.");
+        }
+
+        [Fact]
+        public async Task Update_ReturnsOK_WhenDealerWasSuccessfullyUpdated()
+        {
+            // Arrange
+            var createdDealer = 
+                await CreateDealerAsync(new NewDealerDto { Name = "Kazlov", Address = "Inte-Tests", Country = "Poland", PostalCode = "040" });
+            var dealerToUpdate = 
+                new UpdateDealerDto(){ Id = createdDealer.Id, Name = "UpdatedName", Address = createdDealer.Address, Country = createdDealer.Country, PostalCode = "050" };
+
+            // Act
+            var response = await TestClient.PutAsJsonAsync(ApiRoutes.Dealers.Update, dealerToUpdate);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task Update_ReturnsNotFound_WhenDealerNotExistsInDatabase()
+        {
+            // Arrange
+            var dealerToUpdate = 
+                new UpdateDealerDto() { Id = _unexistingDealerId, Name = "testing", Address = "testing", Country = "testing", PostalCode = "testing" };
+
+            // Act
+            var response = await TestClient.PutAsJsonAsync(ApiRoutes.Dealers.Update, dealerToUpdate);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            responseContent.Should().Contain($"Dealer {_unexistingDealerId} does not exist.");
         }
 
         private async Task<Dealer> CreateDealerAsync(NewDealerDto dealer)
